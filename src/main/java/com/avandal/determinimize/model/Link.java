@@ -26,22 +26,36 @@ public class Link {
 		this.transition = new HashSet<>();
 	}
 	
-	Link copy() {
+	public Link copy() {
 		Link copy = new Link(source, target);
 		copy.transition.addAll(transition);
 		return copy;
 	}
 	
-	void addTransition(String transition) {
+	public void addTransition(String transition) {
 		this.transition.add(transition);
 	}
 	
-	void addTransition(Collection<String> transition) {
+	public void addTransition(Collection<String> transition) {
 		this.transition.addAll(transition);
 	}
 	
-	void addTransition(String...transition) {
-		this.transition.addAll(Arrays.asList(transition));
+	public void addTransition(String...transition) {
+		addTransition(Arrays.asList(transition));
+	}
+	
+	public void removeTransition(String transition) {
+		this.transition.remove(transition);
+	}
+	
+	public void removeTransition(Collection<String> transition) {
+		for (String s : transition) {
+			this.transition.remove(s);
+		}
+	}
+	
+	public void removeTransition(String...transition) {
+		removeTransition(Arrays.asList(transition));
 	}
 	
 	@Override

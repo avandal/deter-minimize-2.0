@@ -1,31 +1,23 @@
-package com.avandal.determinimize.model;
+package com.avandal.determinimize.persistence;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
+import com.avandal.determinimize.model.Link;
+import com.avandal.determinimize.model.State;
+
+@Component
 public class Automaton {
 	private Map<String, State> states;
 	
 	private static final Logger logger = LoggerFactory.getLogger(Automaton.class);
 	
-	private static volatile Automaton instance = null;
-	
 	private Automaton() {
 		states = new HashMap<>();
-	}
-	
-	public static Automaton getInstance() {
-		if (instance == null) {
-			synchronized(Automaton.class) {
-				if (instance == null) {
-					instance = new Automaton();
-				}
-			}
-		}
-		return instance;
 	}
 	
 	public void addState(State state) {
@@ -58,6 +50,23 @@ public class Automaton {
 		
 		source.addLinkOut(link);
 		target.addLinkIn(link);
+	}
+	
+	public void removeTransition(String sSource, String sTarget, String...transition) {
+		State source = states.get(sSource);
+		if (source == null) {
+			throw new IllegalArgumentException("The state " + sSource + " doesn't exist");
+		}
+		
+		State target = states.get(sTarget);
+		if (target == null) {
+			throw new IllegalArgumentException("The state " + sTarget + " doesn't exist");
+		}
+		
+		Link link = new Link(source, target);
+		link.addTransition(transition);
+		
+		source.removeLinkOut(link);
 	}
 	
 	public Map<String, State> getStates() {

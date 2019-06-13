@@ -60,7 +60,7 @@ public class State {
 		return copy;
 	}
 	
-	State copy() {
+	public State copy() {
 		State copy = new State(name, initialState, finalState, x, y);
 		copy.linksOut = _linksCopy(InOut.OUT);
 		copy.linksIn = _linksCopy(InOut.IN);
@@ -68,7 +68,7 @@ public class State {
 		return copy;
 	}
 	
-	private Optional<Link> _hasLink(State target, InOut inOut) {
+	private Optional<Link> _getLink(State target, InOut inOut) {
 		for (Link link : _chooseLinks(inOut)) {
 			if (link.getTarget().equals(target)) {
 				return Optional.of(link);
@@ -78,7 +78,7 @@ public class State {
 	}
 	
 	private void _addValidLink(Link link, InOut inOut) {
-		Optional<Link> optLink = _hasLink(link.getTarget(), inOut);
+		Optional<Link> optLink = _getLink(link.getTarget(), inOut);
 		if (optLink.isEmpty()) {
 			_chooseLinks(inOut).add(link);
 		} else {
@@ -86,17 +86,32 @@ public class State {
 		}
 	}
 	
-	void addLinkOut(Link link) {
-		if (this.equals(link.getSource()) && link.getTarget() != null) {
+	private void _removeValidLink(Link link, InOut inOut) {
+		Optional<Link> optLink = _getLink(link.getTarget(), inOut);
+		if (optLink.isPresent()) {
+			optLink.get().removeTransition(link.getTransition());
+		}
+	}
+	
+	public void addLinkOut(Link link) {
+		if (link != null && this.equals(link.getSource()) && link.getTarget() != null) {
 			_addValidLink(link, InOut.OUT);
 		} else {
 			logger.error("The given link is invalid: {}", link);
 		}
 	}
 	
-	void addLinkIn(Link link) {
-		if (this.equals(link.getTarget()) && link.getSource() != null) {
+	public void addLinkIn(Link link) {
+		if (link != null && this.equals(link.getTarget()) && link.getSource() != null) {
 			_addValidLink(link, InOut.IN);
+		} else {
+			logger.error("The given link is invalid: {}", link);
+		}
+	}
+	
+	public void removeLinkOut(Link link) {
+		if (link != null && this.equals(link.getSource()) && link.getTarget() != null) {
+			_removeValidLink(link, InOut.OUT);
 		} else {
 			logger.error("The given link is invalid: {}", link);
 		}
