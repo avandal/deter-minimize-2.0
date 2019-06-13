@@ -24,7 +24,7 @@ public class ConsoleController {
 		automaton.addTransition("2", "1", "a");
 		automaton.addTransition("1", "2", "c", "e");
 		
-		automaton.removeTransition("1", "2", "c", "d");
+		automaton.removeTransition("1", "2", "a", "b", "c");
 		
 		System.out.println(automaton);
 	}

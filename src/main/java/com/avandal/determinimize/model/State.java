@@ -88,9 +88,7 @@ public class State {
 	
 	private void _removeValidLink(Link link, InOut inOut) {
 		Optional<Link> optLink = _getLink(link.getTarget(), inOut);
-		if (optLink.isPresent()) {
-			optLink.get().removeTransition(link.getTransition());
-		}
+		optLink.ifPresent(l -> l.removeTransition(link.getTransition()));
 	}
 	
 	public void addLinkOut(Link link) {

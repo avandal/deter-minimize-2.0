@@ -5,25 +5,24 @@
 	<groupId>com.avandal</groupId>
 	<artifactId>deter-minimize-2.0</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 
 	<properties>
 		<slf4j>1.7.26</slf4j>
 		<log4j>1.2.17</log4j>
-		<spring>5.1.6.RELEASE</spring>
+		<spring>5.1.7.RELEASE</spring>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-jdk14</artifactId>
 			<version>${slf4j}</version>
 		</dependency>
+
+
+		<!-- <dependency> <groupId>org.slf4j</groupId> <artifactId>slf4j-jdk14</artifactId> 
+			<version>${slf4j}</version> </dependency> -->
 
 		<dependency>
 			<groupId>log4j</groupId>
@@ -43,6 +42,26 @@
 			<version>4.0.1</version>
 			<scope>provided</scope>
 		</dependency>
-
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.0</version>
+				<configuration>
+					<release>11</release>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<webXml>WebContent\WEB-INF\web.xml</webXml>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
