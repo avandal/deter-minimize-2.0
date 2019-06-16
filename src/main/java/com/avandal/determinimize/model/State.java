@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,9 +69,13 @@ public class State {
 		return copy;
 	}
 	
-	private Optional<Link> _getLink(State target, InOut inOut) {
+	private State _sourceOrTarget(Link link, InOut inOut) {
+		return (inOut == InOut.OUT ? link.getTarget() : link.getSource());
+	}
+	
+	private Optional<Link> _getLink(State state, InOut inOut) {
 		for (Link link : _chooseLinks(inOut)) {
-			if (link.getTarget().equals(target)) {
+			if (_sourceOrTarget(link, inOut).equals(state)) {
 				return Optional.of(link);
 			}
 		}
@@ -78,7 +83,7 @@ public class State {
 	}
 	
 	private void _addValidLink(Link link, InOut inOut) {
-		Optional<Link> optLink = _getLink(link.getTarget(), inOut);
+		Optional<Link> optLink = _getLink(_sourceOrTarget(link, inOut), inOut);
 		if (optLink.isEmpty()) {
 			_chooseLinks(inOut).add(link);
 		} else {
@@ -87,7 +92,7 @@ public class State {
 	}
 	
 	private void _removeValidLink(Link link, InOut inOut) {
-		Optional<Link> optLink = _getLink(link.getTarget(), inOut);
+		Optional<Link> optLink = _getLink(_sourceOrTarget(link, inOut), inOut);
 		optLink.ifPresent(l -> l.removeTransition(link.getTransition()));
 	}
 	
@@ -113,6 +118,23 @@ public class State {
 		} else {
 			logger.error("The given link is invalid: {}", link);
 		}
+	}
+	
+	private void _removeLinks(String name, InOut inOut) {
+		switch (inOut) {
+		case IN : 
+			linksIn = linksIn.stream().filter(link -> !link.getSource().getName().equals(name)).collect(Collectors.toSet());
+			break;
+			
+		case OUT :
+			linksOut = linksOut.stream().filter(link -> !link.getTarget().getName().equals(name)).collect(Collectors.toSet());
+			break;
+		}
+	}
+	
+	public void removeLinks() {
+		linksOut.forEach(link -> link.getTarget()._removeLinks(name, InOut.IN));
+		linksIn.forEach(link -> link.getSource()._removeLinks(name, InOut.OUT));
 	}
 	
 	@Override

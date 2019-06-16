@@ -23,9 +23,26 @@ public class ConsoleController {
 		automaton.addTransition("1", "3", "c", "d");
 		automaton.addTransition("2", "1", "a");
 		automaton.addTransition("1", "2", "c", "e");
+		automaton.addTransition("2", "3", "a");
 		
-		automaton.removeTransition("1", "2", "a", "b", "c");
+
+		System.out.println("Initial automaton:");
+		System.out.println(automaton);
 		
+		automaton.removeState("1");
+		
+		System.out.println("After removing 1");
+		System.out.println(automaton);
+		
+		automaton.addState(new State("1", false, false));
+		
+		System.out.println("After adding new 1");
+		System.out.println(automaton);
+		
+		automaton.addState(new State("1", true, false));
+		automaton.addTransition("1", "1", "a", "b");
+		
+		System.out.println("After adding another 1");
 		System.out.println(automaton);
 	}
 }

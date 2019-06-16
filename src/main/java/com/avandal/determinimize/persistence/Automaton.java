@@ -22,7 +22,13 @@ public class Automaton {
 	
 	public void addState(State state) {
 		if (state == null) {
-			throw new IllegalArgumentException("A state can't be null.");
+			logger.error("A state can't be null.");
+			return;
+		}
+		
+		if (states.containsKey(state.getName())) {
+			logger.error("The given state already exists.");
+			return;
 		}
 		
 		states.put(state.getName(), state);
@@ -35,14 +41,21 @@ public class Automaton {
 	}
 	
 	public void addTransition(String sSource, String sTarget, String...transition) {
+		if (sSource == null || sTarget == null || transition == null) {
+			logger.error("There is a null entry.");
+			return;
+		}
+		
 		State source = states.get(sSource);
 		if (source == null) {
-			throw new IllegalArgumentException("The state " + sSource + " doesn't exist");
+			logger.error("The state " + sSource + " doesn't exist");
+			return;
 		}
 		
 		State target = states.get(sTarget);
 		if (target == null) {
-			throw new IllegalArgumentException("The state " + sTarget + " doesn't exist");
+			logger.error("The state " + sTarget + " doesn't exist");
+			return;
 		}
 		
 		Link link = new Link(source, target);
@@ -53,20 +66,50 @@ public class Automaton {
 	}
 	
 	public void removeTransition(String sSource, String sTarget, String...transition) {
+		if (sSource == null || sTarget == null || transition == null) {
+			logger.error("There is a null entry.");
+			return;
+		}
+		
 		State source = states.get(sSource);
 		if (source == null) {
-			throw new IllegalArgumentException("The state " + sSource + " doesn't exist");
+			logger.error("The state " + sSource + " doesn't exist");
+			return;
 		}
 		
 		State target = states.get(sTarget);
 		if (target == null) {
-			throw new IllegalArgumentException("The state " + sTarget + " doesn't exist");
+			logger.error("The state " + sTarget + " doesn't exist");
+			return;
 		}
 		
 		Link link = new Link(source, target);
 		link.addTransition(transition);
 		
 		source.removeLinkOut(link);
+	}
+	
+	public void removeState(String sState) {
+		if (sState == null) {
+			logger.error("Can't remove a null state.");
+			return;
+		}
+		
+		State state = states.get(sState);
+		if (state == null) {
+			logger.error("This state doesn't exist.");
+			return;
+		}
+		
+		state.removeLinks();
+		
+		states.remove(sState);
+	}
+	
+	public void removeStates(String...states) {
+		for (String state : states) {
+			removeState(state);
+		}
 	}
 	
 	public Map<String, State> getStates() {
