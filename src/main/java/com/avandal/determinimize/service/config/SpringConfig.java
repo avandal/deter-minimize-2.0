@@ -6,7 +6,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan(basePackages = {
 		"com.avandal.determinimize.persistence",
-		"com.avandal.determinimize.control" 
+		"com.avandal.determinimize.control",
+		"com.avandal.determinimize.binding.mapper"
 })
 public class SpringConfig {
 	

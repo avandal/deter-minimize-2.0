@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -32,6 +31,7 @@ public class WebController {
 			this.value = value;
 		}
 		
+		@SuppressWarnings("unused")
 		public String getValue() {
 			return value;
 		}
@@ -40,14 +40,10 @@ public class WebController {
 	private static final Logger logger = LoggerFactory.getLogger(WebController.class);
 
 	@GetMapping
-	@ResponseBody
 	public ResponseEntity<String> get() {
-//		Map<String, String> map = new HashMap<>();
-//		map.put("value", "Coucou !");
 		try {
 			return new ResponseEntity<>(new ObjectMapper().writeValueAsString(new StringObject("Coucou !")), HttpStatus.OK);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
