@@ -1,6 +1,8 @@
 package com.avandal.determinimize.control;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +44,8 @@ public class WebController {
 	@GetMapping
 	public ResponseEntity<String> get() {
 		try {
-			return new ResponseEntity<>(new ObjectMapper().writeValueAsString(new StringObject("Coucou !")), HttpStatus.OK);
+			String[] arr = new String[] {"Coucou", "toi !"};
+			return new ResponseEntity<String>(new ObjectMapper().writeValueAsString(Arrays.asList(arr)), HttpStatus.OK);
 		} catch (JsonProcessingException e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}

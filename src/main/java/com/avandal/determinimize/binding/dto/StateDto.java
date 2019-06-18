@@ -11,16 +11,16 @@ public class StateDto {
 	private Set<LinkDto> linksIn;
 	
 	private boolean initialState;
-	private boolean finalSate;
+	private boolean finalState;
 	
-	public StateDto(int x, int y, String name, Set<LinkDto> linksOut, Set<LinkDto> linksIn, boolean initialState, boolean finalSate) {
+	public StateDto(int x, int y, String name, Set<LinkDto> linksOut, Set<LinkDto> linksIn, boolean initialState, boolean finalState) {
 		this.x = x;
 		this.y = y;
 		this.name = name;
 		this.linksOut = linksOut;
 		this.linksIn = linksIn;
 		this.initialState = initialState;
-		this.finalSate = finalSate;
+		this.finalState = finalState;
 	}
 
 	public int getX() {
@@ -71,11 +71,16 @@ public class StateDto {
 		this.initialState = initialState;
 	}
 
-	public boolean isFinalSate() {
-		return finalSate;
+	public boolean isFinalState() {
+		return finalState;
 	}
 
-	public void setFinalSate(boolean finalSate) {
-		this.finalSate = finalSate;
+	public void setFinalState(boolean finalState) {
+		this.finalState = finalState;
+	}
+	
+	@Override
+	public String toString() {
+		return "StateDto: " + this.name + "[initial=" + initialState + ", final=" + finalState + ", linksOut=" + linksOut + ", linksIn=" + linksIn + "]";
 	}
 }

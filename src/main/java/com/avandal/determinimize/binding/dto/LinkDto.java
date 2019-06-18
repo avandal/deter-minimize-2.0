@@ -1,11 +1,13 @@
 package com.avandal.determinimize.binding.dto;
 
+import java.util.List;
+
 public class LinkDto {
 	private StateDto source;
 	private StateDto target;
-	private String[] transition;
+	private List<String> transition;
 	
-	public LinkDto(StateDto source, StateDto target, String[] transition) {
+	public LinkDto(StateDto source, StateDto target, List<String> transition) {
 		this.source = source;
 		this.target = target;
 		this.transition = transition;
@@ -27,11 +29,16 @@ public class LinkDto {
 		this.target = target;
 	}
 
-	public String[] getTransition() {
+	public List<String> getTransition() {
 		return transition;
 	}
 
-	public void setTransition(String[] transition) {
+	public void setTransition(List<String> transition) {
 		this.transition = transition;
+	}
+	
+	@Override
+	public String toString() {
+		return "LinkDto: " + this.source.getName() + " --" + this.transition + "-> " + this.target.getName();
 	}
 }

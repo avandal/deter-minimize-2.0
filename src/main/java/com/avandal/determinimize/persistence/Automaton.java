@@ -2,6 +2,7 @@ package com.avandal.determinimize.persistence;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -116,6 +117,10 @@ public class Automaton {
 		Map<String, State> copy = new HashMap<>();
 		states.forEach((key, state) -> copy.put(key, state.copy()));
 		return copy;
+	}
+	
+	public Optional<State> getState(String name) {
+		return Optional.ofNullable(states.get(name));
 	}
 	
 	@Override

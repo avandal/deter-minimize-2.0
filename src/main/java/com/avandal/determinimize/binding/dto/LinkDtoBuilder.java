@@ -1,9 +1,11 @@
 package com.avandal.determinimize.binding.dto;
 
+import java.util.List;
+
 public class LinkDtoBuilder {
 	private StateDto source;
 	private StateDto target;
-	private String[] transition;
+	private List<String> transition;
 	
 	public LinkDtoBuilder() {}
 	
@@ -17,7 +19,7 @@ public class LinkDtoBuilder {
 		return this;
 	}
 	
-	public LinkDtoBuilder transition(String[] transition) {
+	public LinkDtoBuilder transition(List<String> transition) {
 		this.transition = transition;
 		return this;
 	}

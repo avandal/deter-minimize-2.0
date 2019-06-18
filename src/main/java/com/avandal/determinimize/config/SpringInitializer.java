@@ -1,4 +1,4 @@
-package com.avandal.determinimize.service.config;
+package com.avandal.determinimize.config;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
