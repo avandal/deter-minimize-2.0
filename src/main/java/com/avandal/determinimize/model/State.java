@@ -40,7 +40,7 @@ public class State {
 		this.linksIn = new HashSet<>();
 	}
 	
-	public State(String name, boolean initialState, boolean finalState, int x, int y) {
+	public State(int x, int y, String name, boolean initialState, boolean finalState) {
 		this(name, initialState, finalState);
 		
 		this.x = x;
@@ -62,7 +62,7 @@ public class State {
 	}
 	
 	public State copy() {
-		State copy = new State(name, initialState, finalState, x, y);
+		State copy = new State(x, y, name, initialState, finalState);
 		copy.linksOut = _linksCopy(InOut.OUT);
 		copy.linksIn = _linksCopy(InOut.IN);
 		
@@ -93,6 +93,14 @@ public class State {
 	
 	private void _removeValidLink(Link link, InOut inOut) {
 		Optional<Link> optLink = _getLink(_sourceOrTarget(link, inOut), inOut);
+		if (optLink.isPresent()) {
+			Link lLink = optLink.get();
+			lLink.removeTransition(link.getTransition());
+			
+			if (lLink.getTransition().isEmpty()) {
+				_chooseLinks(inOut).remove(lLink);
+			}
+		}
 		optLink.ifPresent(l -> l.removeTransition(link.getTransition()));
 	}
 	
@@ -115,6 +123,14 @@ public class State {
 	public void removeLinkOut(Link link) {
 		if (link != null && this.equals(link.getSource()) && link.getTarget() != null) {
 			_removeValidLink(link, InOut.OUT);
+		} else {
+			logger.error("The given link is invalid: {}", link);
+		}
+	}
+	
+	public void removeLinkIn(Link link) {
+		if (link != null && this.equals(link.getTarget()) && link.getSource() != null) {
+			_removeValidLink(link, InOut.IN);
 		} else {
 			logger.error("The given link is invalid: {}", link);
 		}

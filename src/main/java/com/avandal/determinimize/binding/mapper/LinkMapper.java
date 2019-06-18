@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.avandal.determinimize.binding.dto.LinkDto;
-import com.avandal.determinimize.binding.dto.LinkDtoBuilder;
+import com.avandal.determinimize.binding.dto.builder.LinkDtoBuilder;
 import com.avandal.determinimize.model.Link;
 
 @Component

@@ -1,5 +1,6 @@
 package com.avandal.determinimize.binding.dto;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class StateDto {
@@ -21,6 +22,10 @@ public class StateDto {
 		this.linksIn = linksIn;
 		this.initialState = initialState;
 		this.finalState = finalState;
+	}
+	
+	public StateDto(String name, boolean initialState, boolean finalState) {
+		this(0, 0, name, new HashSet<>(), new HashSet<>(), initialState, finalState);
 	}
 
 	public int getX() {

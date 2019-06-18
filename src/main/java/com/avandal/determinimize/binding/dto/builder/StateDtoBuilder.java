@@ -1,6 +1,9 @@
-package com.avandal.determinimize.binding.dto;
+package com.avandal.determinimize.binding.dto.builder;
 
 import java.util.Set;
+
+import com.avandal.determinimize.binding.dto.LinkDto;
+import com.avandal.determinimize.binding.dto.StateDto;
 
 public class StateDtoBuilder {
 	private int x;
