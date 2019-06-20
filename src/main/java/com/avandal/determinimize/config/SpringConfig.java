@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ComponentScan(basePackages = {
+		"com.avandal.determinimize.binding.parser",
 		"com.avandal.determinimize.binding.mapper",
 		"com.avandal.determinimize.persistence",
 		"com.avandal.determinimize.service",

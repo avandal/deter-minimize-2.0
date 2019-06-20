@@ -7,10 +7,14 @@ public class LinkDto {
 	private StateDto target;
 	private List<String> transition;
 	
-	public LinkDto(StateDto source, StateDto target, List<String> transition) {
+	private int curve;
+	
+	public LinkDto(StateDto source, StateDto target, List<String> transition, int curve) {
 		this.source = source;
 		this.target = target;
 		this.transition = transition;
+		
+		this.curve = curve;
 	}
 
 	public StateDto getSource() {
@@ -37,8 +41,16 @@ public class LinkDto {
 		this.transition = transition;
 	}
 	
+	public int getCurve() {
+		return curve;
+	}
+	
+	public void setCurve(int curve) {
+		this.curve = curve;
+	}
+	
 	@Override
 	public String toString() {
-		return "LinkDto: " + this.source.getName() + " --" + this.transition + "-> " + this.target.getName();
+		return "LinkDto: " + this.source.getName() + " --" + this.transition + "{curve=" + this.curve + "}-> " + this.target.getName();
 	}
 }

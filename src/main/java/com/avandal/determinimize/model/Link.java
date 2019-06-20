@@ -14,9 +14,15 @@ public class Link {
 	private State target;
 	private Set<String> transition;
 	
+	private int curve;
+	
 	private static final Logger logger = LoggerFactory.getLogger(Link.class);
 	
 	public Link(State source, State target) {
+		this(source, target, 30);
+	}
+	
+	public Link(State source, State target, int curve) {
 		if (source == null || target == null) {
 			throw new IllegalArgumentException("The source or the target can't be null.");
 		}
@@ -24,10 +30,12 @@ public class Link {
 		this.source = source;
 		this.target = target;
 		this.transition = new HashSet<>();
+		
+		this.curve = curve;
 	}
 	
 	public Link copy() {
-		Link copy = new Link(source, target);
+		Link copy = new Link(source, target, curve);
 		copy.transition.addAll(transition);
 		return copy;
 	}
@@ -60,7 +68,7 @@ public class Link {
 	
 	@Override
 	public String toString() {
-		return "Link: " + this.source.getName() + " --" + this.transition + "-> " + this.target.getName();
+		return "Link: " + this.source.getName() + " --" + this.transition + "{curve=" + this.curve + "}-> " + this.target.getName();
 	}
 	
 
@@ -83,6 +91,14 @@ public class Link {
 	public Set<String> getTransition() {
 		return new HashSet<>(transition);
 	}
+	
+	public int getCurve() {
+		return curve;
+	}
+	
+	public void setCurve(int curve) {
+		this.curve = curve;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -94,7 +110,7 @@ public class Link {
 		}
 		Link other = (Link) obj;
 		return Objects.equals(source, other.source) && Objects.equals(target, other.target)
-				&& Objects.equals(transition, other.transition);
+				&& Objects.equals(transition, other.transition) && curve == other.curve;
 	}
 	
 	

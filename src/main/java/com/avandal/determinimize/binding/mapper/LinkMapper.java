@@ -20,6 +20,7 @@ public class LinkMapper {
 				.source(stateMapper.stateToDtoWithoutLinks(link.getSource()))
 				.target(stateMapper.stateToDtoWithoutLinks(link.getTarget()))
 				.transition(Arrays.asList(link.getTransition().toArray(new String[0])))
+				.curve(link.getCurve())
 				.build();
 	}
 }

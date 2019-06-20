@@ -27,6 +27,10 @@ public class StateDto {
 	public StateDto(String name, boolean initialState, boolean finalState) {
 		this(0, 0, name, new HashSet<>(), new HashSet<>(), initialState, finalState);
 	}
+	
+	public StateDto(int x, int y, String name, boolean initialState, boolean finalState) {
+		this(x, y, name, new HashSet<>(), new HashSet<>(), initialState, finalState);
+	}
 
 	public int getX() {
 		return x;
@@ -86,6 +90,6 @@ public class StateDto {
 	
 	@Override
 	public String toString() {
-		return "StateDto: " + this.name + "[initial=" + initialState + ", final=" + finalState + ", linksOut=" + linksOut + ", linksIn=" + linksIn + "]";
+		return "StateDto: " + this.name + "[x=" + x + ", y=" + y + ", initial=" + initialState + ", final=" + finalState + ", linksOut=" + linksOut + ", linksIn=" + linksIn + "]";
 	}
 }

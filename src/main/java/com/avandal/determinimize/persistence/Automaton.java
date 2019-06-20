@@ -1,5 +1,6 @@
 package com.avandal.determinimize.persistence;
 
+import java.awt.Dimension;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -21,15 +22,19 @@ public class Automaton {
 		states = new HashMap<>();
 	}
 	
+	public void clear() {
+		states.clear();
+	}
+	
 	public void addState(State state) {
 		states.put(state.getName(), state);
 	}
 	
-	public void addTransition(String sSource, String sTarget, String...transition) {
+	public void addTransition(String sSource, String sTarget, int curve, String...transition) {
 		State source = states.get(sSource);
 		State target = states.get(sTarget);
 		
-		Link link = new Link(source, target);
+		Link link = new Link(source, target, curve);
 		link.addTransition(transition);
 		
 		source.addLinkOut(link);
@@ -68,6 +73,25 @@ public class Automaton {
 	
 	public Optional<State> getState(String name) {
 		return Optional.ofNullable(states.get(name));
+	}
+	
+	public Dimension getMaxDimension() {
+		int width = 750;
+		int height = 550;
+		
+		int gap = 50;
+		
+		for (State state : states.values()) {
+			if (state.getX() > width) {
+				width = state.getX();
+			}
+			
+			if (state.getY() > height) {
+				height = state.getY();
+			}
+		}
+		
+		return new Dimension(width + gap, height + gap);
 	}
 	
 	@Override

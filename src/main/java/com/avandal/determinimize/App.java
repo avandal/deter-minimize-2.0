@@ -13,6 +13,7 @@ import com.avandal.determinimize.service.exception.AutomatonException;
 @SpringBootApplication
 @ComponentScan(basePackages = {
 		"com.avandal.determinimize.config",
+		"com.avandal.determinimize.binding.parser",
 		"com.avandal.determinimize.binding.mapper",
 		"com.avandal.determinimize.persistence",
 		"com.avandal.determinimize.service",

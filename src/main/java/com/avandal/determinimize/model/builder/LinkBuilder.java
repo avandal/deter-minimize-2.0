@@ -10,6 +10,8 @@ public class LinkBuilder {
 	private State target;
 	private List<String> transition;
 	
+	private int curve;
+	
 	public LinkBuilder() {}
 	
 	public LinkBuilder source(State source) {
@@ -27,8 +29,13 @@ public class LinkBuilder {
 		return this;
 	}
 	
+	public LinkBuilder curve(int curve) {
+		this.curve = curve;
+		return this;
+	}
+	
 	public Link build() {
-		Link ret = new Link(source, target);
+		Link ret = new Link(source, target, curve);
 		ret.addTransition(transition);
 		return ret;
 	}

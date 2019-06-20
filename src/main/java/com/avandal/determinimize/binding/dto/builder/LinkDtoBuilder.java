@@ -10,6 +10,8 @@ public class LinkDtoBuilder {
 	private StateDto target;
 	private List<String> transition;
 	
+	private int curve;
+	
 	public LinkDtoBuilder() {}
 	
 	public LinkDtoBuilder source(StateDto source) {
@@ -22,12 +24,17 @@ public class LinkDtoBuilder {
 		return this;
 	}
 	
+	public LinkDtoBuilder curve(int curve) {
+		this.curve = curve;
+		return this;
+	}
+	
 	public LinkDtoBuilder transition(List<String> transition) {
 		this.transition = transition;
 		return this;
 	}
 	
 	public LinkDto build() {
-		return new LinkDto(source, target, transition);
+		return new LinkDto(source, target, transition, curve);
 	}
 }

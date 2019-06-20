@@ -1,5 +1,6 @@
 package com.avandal.determinimize.service;
 
+import java.awt.Dimension;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,16 +29,8 @@ public class AutomatonService {
 	
 	private AutomatonService() {}
 	
-	public void mockAutomaton() {
-		automaton.addState(new State("1", true, false));
-		automaton.addState(new State("2", false, false));
-		automaton.addState(new State("3", false, true));
-		
-		automaton.addTransition("1", "2", "a", "b", "c");
-		automaton.addTransition("1", "3", "c", "d");
-		automaton.addTransition("2", "1", "a");
-		automaton.addTransition("1", "2", "c", "e");
-		automaton.addTransition("2", "3", "a");
+	public void clearAutomaton() {
+		automaton.clear();
 	}
 	
 	public List<StateDto> getStates() {
@@ -67,14 +60,18 @@ public class AutomatonService {
 		}
 	}
 	
-	public void addTransition(String source, String target, String...transition) throws AutomatonException {
+	public void addTransition(String source, String target, int curve, String...transition) throws AutomatonException {
 		try {
-			_checkTransition(source, target, transition);
+			_checkTransition(source, target, curve, transition);
 		} catch (AutomatonException e) {
 			throw e;
 		}
 		
-		automaton.addTransition(source, target, transition);
+		automaton.addTransition(source, target, curve, transition);
+	}
+	
+	public void addTransition(String source, String target, String...transition) throws AutomatonException {
+		addTransition(source, target, 30, transition);
 	}
 	
 	public void removeState(String state) throws AutomatonException {
@@ -101,7 +98,7 @@ public class AutomatonService {
 	
 	public void removeTransition(String source, String target, String...transition) throws AutomatonException {
 		try {
-			_checkTransition(source, target, transition);
+			_checkTransition(source, target, 0, transition);
 		} catch (AutomatonException e) {
 			throw e;
 		}
@@ -109,7 +106,11 @@ public class AutomatonService {
 		automaton.removeTransition(source, target, transition);
 	}
 	
-	private void _checkTransition(String source, String target, String...transition) throws AutomatonException {
+	public Dimension getMaxDimension() {
+		return automaton.getMaxDimension();
+	}
+	
+	private void _checkTransition(String source, String target, int curve, String...transition) throws AutomatonException {
 		if (source == null || source.trim().equals("") 
 		 || target == null || target.trim().equals("")
 		 || transition == null) {
