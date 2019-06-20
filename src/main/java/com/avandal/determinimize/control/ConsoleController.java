@@ -31,7 +31,7 @@ public class ConsoleController {
 		automatonService.getStates().forEach(System.out::println);
 		
 		System.out.println("Adding another 1");
-		automatonService.addState(new StateDto("1", true, false));
+//		automatonService.addState(new StateDto("1", true, false));
 		automatonService.addTransition("1", "1", "a", "b");
 		
 		automatonService.getStates().forEach(System.out::println);
