@@ -1,14 +1,12 @@
 package com.avandal.determinimize.binding.parser;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,6 +26,8 @@ public class DmndotParser {
 	private static final int LINK_TARGET = 5;
 	private static final int LINK_TRANSITION = 2;
 	private static final int LINK_CURVE = 4;
+
+	private static final Logger logger = LoggerFactory.getLogger(DmndotParser.class);
 	
 	@Autowired
 	private AutomatonService automatonService;
@@ -37,15 +37,17 @@ public class DmndotParser {
 	
 	private DmndotParser() {}
 	
-	public List<StateDto> open(String filename) throws IOException {
+	public List<StateDto> open(String automaton) {
 		automatonService.clearAutomaton();
-		Files.lines(Paths.get(filename), StandardCharsets.UTF_8).forEach(line -> {
+		Arrays.asList(automaton.split("\n")).forEach(line -> {
 			Matcher m;
 			
 			if ((m = Pattern.compile(statePattern).matcher(line)).matches()) {
 				_addState(m);
 			} else if ((m = Pattern.compile(linkPattern).matcher(line)).matches()) {
 				_addLink(m);
+			} else {
+				System.out.println("This line has been skipped: /" + line + "/");
 			}
 		});
 		

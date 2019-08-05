@@ -22,10 +22,6 @@ public class ConsoleController {
 	private ConsoleController() {}
 	
 	public void run() throws AutomatonException {
-		try {
-			parser.open("/home/excilys/eclipse-workspace/deter-minimize/graphs/graph3.grv");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		// parser.open("/home/excilys/eclipse-workspace/deter-minimize/graphs/graph3.grv");
 	}
 }

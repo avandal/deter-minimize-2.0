@@ -35,17 +35,11 @@ public class WebController {
 	private DmndotParser parser;
 
 	@PutMapping("open")
-	public ResponseEntity<List<StateDto>> open(@RequestBody String url) {
-		try {
-			parser.open(url);
-//			for (StateDto state : automatonService.getStates()) {
-//				System.out.println(state);
-//			}
-			return new ResponseEntity<>(automatonService.getStates(), HttpStatus.OK);
-		} catch (IOException e) {
-			e.printStackTrace();
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	public ResponseEntity<List<StateDto>> open(@RequestBody(required = false) String text) {
+		if (text != null) {
+			parser.open(text);
 		}
+		return new ResponseEntity<>(automatonService.getStates(), HttpStatus.OK);
 	}
 	
 	@GetMapping("states/dimension")
